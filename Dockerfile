@@ -22,12 +22,17 @@ RUN a2enmod rewrite
 # Copia los archivos del proyecto al contenedor
 COPY . /var/www/html
 
-# Configura permisos para los directorios necesarios
-RUN chown -R www-data:www-data /var/www/html/public/files /var/www/html/public/resources \
-    && chmod -R 775 /var/www/html/public/files /var/www/html/public/resources
+# Copia el script de permisos al contenedor
+COPY set_permissions.sh /usr/local/bin/set_permissions.sh
+
+# Asegúrate de que el script sea ejecutable
+RUN chmod +x /usr/local/bin/set_permissions.sh
+
+# Asegúrate de que los directorios necesarios existan antes de cambiar permisos
+RUN mkdir -p /var/www/html/public/files /var/www/html/public/resources
 
 # Descomprime y compila el servidor WebSocket cauldrond
-WORKDIR /var/www/html/extra/cauldrond
+WORKDIR /var/www/html/extra
 RUN tar -xzf cauldrond.tar.gz && \
     cd cauldrond && \
     cmake . && \
@@ -42,5 +47,5 @@ RUN sed -i 's/WEBSOCKET_PORT=.*/WEBSOCKET_PORT=2001/' /var/www/html/settings/cau
 # Expone los puertos necesarios
 EXPOSE 80 2001
 
-# Comando para iniciar Apache y el servidor WebSocket
-CMD service cauldrond start && apache2-foreground
+# Comando para iniciar Apache, el servidor WebSocket y configurar permisos
+CMD /usr/local/bin/set_permissions.sh && service cauldrond start && apache2-foreground
