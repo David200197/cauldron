@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"   # Puerto para el servidor web
+      - "2001:2001" # Puerto para el servidor WebSocket
+    volumes:
+      - .:/var/www/html # Sincroniza los archivos del proyecto con el contenedor
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: cauldron
+      MYSQL_USER: cauldron_user
+      MYSQL_PASSWORD: cauldron_password
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
