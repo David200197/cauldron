@@ -1,4 +1,4 @@
-README: a fork of the [Cauldron VTT](https://gitlab.com/hsleisink/cauldron/-/raw/master/public/images/screenshot.png) project with the goal of making it easier to install the project with Docker
+README: a fork of the [Cauldron VTT](https://gitlab.com/hsleisink/cauldron) project with the goal of making it easier to install the project with Docker
 
 Cauldron VTT
 ============
