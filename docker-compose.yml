@@ -4,10 +4,14 @@ services:
   web:
     build: .
     ports:
-      - "8090:80"   # Puerto para el servidor web
-      - "2001:2001" # Puerto para el servidor WebSocket
+      - "8090:80"
+      - "2001:2001"
     volumes:
-      - .:/var/www/html # Sincroniza los archivos del proyecto con el contenedor
+      - ./public/files:/var/www/html/public/files
+      - ./public/resources:/var/www/html/public/resources
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
     depends_on:
       - db
 
