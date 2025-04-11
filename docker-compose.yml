@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   web:
-    build: .
+    build: "david200197/cauldron"
     ports:
       - "8090:80"
       - "2001:2001"
