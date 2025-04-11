@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   web:
-    build: "david200197/cauldron"
+    image: "david200197/cauldron:latest"
     ports:
       - "8090:80"
       - "2001:2001"
