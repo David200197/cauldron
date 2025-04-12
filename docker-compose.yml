@@ -4,16 +4,14 @@ services:
   web:
     build: .
     ports:
-      - "8090:443"
+      - "8090:80"
       - "2001:2001"
     volumes:
       - ./public/files:/var/www/html/public/files
       - ./public/resources:/var/www/html/public/resources
-      - ./ssl:/etc/apache2/ssl
     environment:
       - APACHE_RUN_USER=www-data
       - APACHE_RUN_GROUP=www-data
-      - HTTPS=on
     depends_on:
       - db
 
